@@ -3,8 +3,8 @@ import "./globals.css"
 
 
 export const metadata = {
-  title: "Daniel Portfolio",
-  description: "A showcase of my work and skills",
+  title: "Funny Capybara API",
+  description: "A Funny Capybara API",
 }
 
 export default function RootLayout({
@@ -14,9 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-roboto">
+      <body className="font-roboto min-h-screen w-full [&>*]:m-0 [&>*]:p-0">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <main className="max-w-5xl mx-auto p-4">
+          <main className="w-full">
             {children}
           </main>
         </ThemeProvider>
