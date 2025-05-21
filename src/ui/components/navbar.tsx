@@ -18,12 +18,12 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <nav className="w-full bg-[#4B3621] text-white sticky top-0 z-50 h-[60px]">
+    <nav className="w-full bg-[#6E3B15] text-white sticky top-0 z-50 h-[60px]">
       <div className="w-full px-4 flex justify-between items-center h-full max-w-7xl mx-auto">
         {/* Logo on left */}
         <Link href="/" className="flex items-center h-full">
           <Image
-            src="/assets/images/capy_api_icon.png"
+            src="/assets/images/capy_api_icon_v2.png"
             alt="Capybara Pixel"
             width={40}
             height={40}
@@ -37,7 +37,7 @@ export function Navbar() {
           <NavigationMenu>
             <NavigationMenuList className="h-full gap-1">
               <NavigationMenuItem>
-                <Link href="/" legacyBehavior passHref>
+                <Link href="/">
                   <NavigationMenuLink
                     className={`${navigationMenuTriggerStyle()} h-full text-white ${
                       pathname === "/" 
@@ -50,7 +50,7 @@ export function Navbar() {
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/about" legacyBehavior passHref>
+                <Link href="/about">
                   <NavigationMenuLink
                     className={`${navigationMenuTriggerStyle()} h-full text-white ${
                       pathname === "/about" 
