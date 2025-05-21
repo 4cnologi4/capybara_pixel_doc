@@ -1,8 +1,8 @@
-import { ThemeProvider } from "@/ui/theme-provider"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Navbar } from "@/ui/components/navbar"
 import { Footer } from "@/ui/components/footer"
+import { ThemeProvider } from "@/ui/theme-provider"
 
 export const metadata: Metadata = {
   title: "Capybara API | The Ultimate Capybara Data Source",
@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background text-foreground antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >

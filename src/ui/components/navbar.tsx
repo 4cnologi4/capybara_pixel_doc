@@ -5,6 +5,7 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
+import { ThemeToggle } from "./theme-toggle"
 
 export function Navbar() {
   const pathname = usePathname()
@@ -62,6 +63,8 @@ export function Navbar() {
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+
+          <ThemeToggle />
         </div>
       </div>
 
