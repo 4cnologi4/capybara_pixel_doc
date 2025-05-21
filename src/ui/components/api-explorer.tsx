@@ -17,7 +17,7 @@ const SUGGESTIONS = [
   "behaviors/swimming"
 ]
 
-export function APIClient() {
+export function APIExplorer() {
   const [path, setPath] = useState("capybaras/1") // Default suggestion
   const [response, setResponse] = useState<any>(null)
   const [loading, setLoading] = useState(false)

@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/ui/theme-provider"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Navbar } from "@/ui/components/navbar"
+import { Footer } from "@/ui/components/footer"
 
 export const metadata: Metadata = {
   title: "Funny Capybara API",
@@ -33,6 +34,7 @@ export default function RootLayout({
           <main className="w-full">
             {children}
           </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
