@@ -3,117 +3,94 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle
-} from "@/ui/components/navigation-menu"
 import { Menu, X } from "lucide-react"
+import { useState } from "react"
 
 export function Navbar() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  // Active route check
+  const isActive = (path: string) => pathname === path
+
   return (
-    <nav className="w-full bg-[#6E3B15] text-white sticky top-0 z-50 h-[60px]">
-      <div className="w-full px-4 flex justify-between items-center h-full max-w-7xl mx-auto">
-        {/* Logo on left */}
-        <Link href="/" className="flex items-center h-full">
-          <Image
-            src="/assets/images/capy_api_icon_v3.png"
-            alt="Capybara Pixel"
-            width={40}
-            height={40}
-            className="mr-2"
-          />
-          <span className="font-bold text-sm">Capybara API</span>
-        </Link>
+    <nav className="w-full bg-[#6d3b1f] text-white sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/assets/images/capy_api_icon_v3.png"
+              alt="Capybara API"
+              width={40}
+              height={40}
+              className="mr-2"
+            />
+            <span className="font-bold">Capybara API</span>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:block">
-          <NavigationMenu>
-            <NavigationMenuList className="h-full gap-1">
-              <NavigationMenuItem>
-                <Link href="/">
-                  <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} h-full text-white ${
-                      pathname === "/" 
-                        ? "bg-[#8B5A2B]" 
-                        : "bg-transparent hover:bg-[#8B5A2B]/50"
-                    }`}
-                  >
-                    Home
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/about">
-                  <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} h-full text-white ${
-                      pathname === "/about" 
-                        ? "bg-[#8B5A2B]" 
-                        : "bg-transparent hover:bg-[#8B5A2B]/50"
-                    }`}
-                  >
-                    About
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  className={`${navigationMenuTriggerStyle()} h-full text-white opacity-50 cursor-not-allowed bg-transparent`}
-                >
-                  GraphQL (coming soon)
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
-
-        {/* Mobile menu button */}
-        <button
-          className="md:hidden p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-[60px] left-0 right-0 bg-[#4B3621] shadow-lg">
-            <div className="flex flex-col py-2">
-              <Link
-                href="/"
-                className={`px-4 py-3 text-white ${
-                  pathname === "/" 
-                    ? "bg-[#8B5A2B]" 
-                    : "hover:bg-[#8B5A2B]/50"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                href="/about"
-                className={`px-4 py-3 text-white ${
-                  pathname === "/about" 
-                    ? "bg-[#8B5A2B]" 
-                    : "hover:bg-[#8B5A2B]/50"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                About
-              </Link>
-              <div className="px-4 py-3 text-white opacity-50 cursor-not-allowed">
-                GraphQL (coming soon)
-              </div>
-            </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-6">
+            <Link 
+              href="/" 
+              className={`hover:text-[#ff5f0f] transition-colors ${
+                isActive('/') ? 'font-bold bg-[#cc4b0c] rounded-md px-3 py-1' : ''
+              }`}
+            >
+              Home
+            </Link>
+            <Link 
+              href="/about" 
+              className={`hover:text-[#ff5f0f] transition-colors ${
+                isActive('/about') ? 'font-bold bg-[#cc4b0c] rounded-md px-3 py-1' : ''
+              }`}
+            >
+              About
+            </Link>
+            <Link 
+              href="/docs" 
+              className="hover:text-[#ff5f0f] transition-colors opacity-50 cursor-not-allowed"
+            >
+              GraphQL (coming Soon)
+            </Link>
           </div>
-        )}
+
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden p-1 hover:text-[#ff5f0f]"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#6d3b1f] px-6 pb-4 space-y-3">
+          <Link 
+            href="/" 
+            className={`block hover:text-[#ff5f0f] ${
+              isActive('/') ? 'font-bold bg-[#cc4b0c] rounded-md px-3 py-1' : ''
+            }`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Home
+          </Link>
+          <Link 
+            href="/about" 
+            className={`block hover:text-[#ff5f0f] ${
+              isActive('/about') ? 'font-bold bg-[#cc4b0c] rounded-md px-3 py-1' : ''
+            }`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            About
+          </Link>
+          <div className="block opacity-50 cursor-not-allowed">
+            GraphQL (coming Soon)
+          </div>
+        </div>
+      )}
     </nav>
   )
 }

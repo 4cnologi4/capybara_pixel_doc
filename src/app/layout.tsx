@@ -5,8 +5,8 @@ import { Navbar } from "@/ui/components/navbar"
 import { Footer } from "@/ui/components/footer"
 
 export const metadata: Metadata = {
-  title: "Funny Capybara API",
-  description: "A Funny Capybara API",
+  title: "Capybara API | The Ultimate Capybara Data Source",
+  description: "Comprehensive API for capybara data, images, and behaviors",
   icons: {
     icon: [
       { url: "/favicon/favicon.ico", sizes: "any" },
@@ -23,18 +23,27 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head>
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <link rel="shortcut icon" href="/favicon/favicon.ico" />
       </head>
-      <body className="font-roboto min-h-screen w-full [&>*]:m-0 [&>*]:p-0">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          <main className="w-full">
-            {children}
-          </main>
-          <Footer />
+      <body className="min-h-screen bg-background text-foreground antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">
+              <div className="mx-auto w-full max-w-7xl px-6 py-12">
+                {children}
+              </div>
+            </main>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>
