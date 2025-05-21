@@ -23,7 +23,7 @@ export function Navbar() {
         {/* Logo on left */}
         <Link href="/" className="flex items-center h-full">
           <Image
-            src="/assets/images/capy_api_icon_v2.png"
+            src="/assets/images/capy_api_icon_v3.png"
             alt="Capybara Pixel"
             width={40}
             height={40}

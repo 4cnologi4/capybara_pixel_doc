@@ -15,7 +15,7 @@ export function Banner() {
             <Card className="w-full max-w-2xl">
                 <CardHeader className="items-center text-center">
                     <Image
-                        src="/assets/images/capy_api_icon_v2.png" // Update with your image path
+                        src="/assets/images/capy_api_icon_v3.png" // Update with your image path
                         alt="Capybara"
                         width={200}
                         height={200}
