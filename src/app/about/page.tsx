@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/ui/components/card"
+import Image from "next/image"
 
 export default function AboutPage() {
     return (
@@ -11,11 +12,25 @@ export default function AboutPage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    <p className="text-muted-foreground">
-                        The Capybara API provides comprehensive data about capybaras, including their habitats,
-                        behaviors, and characteristics. Our mission is to be the most reliable source of
-                        capybara information for developers and researchers worldwide.
-                    </p>
+                    <div className="flex flex-col md:flex-row gap-6 items-center">
+                        <div className="flex-1">
+                            <p className="text-muted-foreground">
+                                The Capybara API provides comprehensive data about capybaras, 
+                                including their habitats, behaviors, and characteristics. 
+                                Our mission is to be the most reliable source of capybara 
+                                information for developers and researchers worldwide.
+                            </p>
+                        </div>
+                        <div className="w-full md:w-1/3">
+                            <Image
+                                src="/assets/images/capybara_glass_of_wine_2.png"
+                                alt="Capybara with wine"
+                                width={300}
+                                height={300}
+                                className="rounded-lg"
+                            />
+                        </div>
+                    </div>
 
                     <div className="mt-8">
                         <h3 className="text-xl font-semibold mb-4">Technology Stack</h3>

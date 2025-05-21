@@ -35,22 +35,28 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:block">
           <NavigationMenu>
-            <NavigationMenuList className="h-full">
+            <NavigationMenuList className="h-full gap-1">
               <NavigationMenuItem>
                 <Link href="/" legacyBehavior passHref>
                   <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} h-full text-white hover:bg-[#8B5A2B] ${pathname === "/" ? "bg-[#4B3621]" : ""
-                      }`}
+                    className={`${navigationMenuTriggerStyle()} h-full text-white ${
+                      pathname === "/" 
+                        ? "bg-[#8B5A2B]" 
+                        : "bg-transparent hover:bg-[#8B5A2B]/50"
+                    }`}
                   >
                     Home
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link href="/about">
+                <Link href="/about" legacyBehavior passHref>
                   <NavigationMenuLink
-                    className={`${navigationMenuTriggerStyle()} h-full text-white hover:bg-[#8B5A2B] ${pathname === "/about" ? "bg-[#8B5A2B]" : ""
-                      }`}
+                    className={`${navigationMenuTriggerStyle()} h-full text-white ${
+                      pathname === "/about" 
+                        ? "bg-[#8B5A2B]" 
+                        : "bg-transparent hover:bg-[#8B5A2B]/50"
+                    }`}
                   >
                     About
                   </NavigationMenuLink>
@@ -58,7 +64,7 @@ export function Navbar() {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuLink
-                  className={`${navigationMenuTriggerStyle()} h-full text-white opacity-50 cursor-not-allowed`}
+                  className={`${navigationMenuTriggerStyle()} h-full text-white opacity-50 cursor-not-allowed bg-transparent`}
                 >
                   GraphQL (coming soon)
                 </NavigationMenuLink>
@@ -81,16 +87,22 @@ export function Navbar() {
             <div className="flex flex-col py-2">
               <Link
                 href="/"
-                className={`px-4 py-3 text-white hover:bg-[#8B5A2B] ${pathname === "/" ? "bg-[#4B3621]" : ""
-                  }`}
+                className={`px-4 py-3 text-white ${
+                  pathname === "/" 
+                    ? "bg-[#8B5A2B]" 
+                    : "hover:bg-[#8B5A2B]/50"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 href="/about"
-                className={`px-4 py-3 text-white hover:bg-[#8B5A2B] ${pathname === "/about" ? "bg-[#8B5A2B]" : ""
-                  }`}
+                className={`px-4 py-3 text-white ${
+                  pathname === "/about" 
+                    ? "bg-[#8B5A2B]" 
+                    : "hover:bg-[#8B5A2B]/50"
+                }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
