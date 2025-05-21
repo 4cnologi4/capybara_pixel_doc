@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@/ui/theme-provider"
 import "./globals.css"
 import type { Metadata } from "next"
+import { Navbar } from "@/ui/components/navbar"
 
 export const metadata: Metadata = {
   title: "Funny Capybara API",
@@ -28,6 +29,7 @@ export default function RootLayout({
       </head>
       <body className="font-roboto min-h-screen w-full [&>*]:m-0 [&>*]:p-0">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Navbar />
           <main className="w-full">
             {children}
           </main>
