@@ -15,7 +15,10 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button variant="ghost" size="icon" onClick={() => handleTheme(isDark ? "light" : "dark")}>
+    <Button className="cursor-pointer"
+      variant="ghost"
+      size="icon"
+      onClick={() => handleTheme(isDark ? "light" : "dark")}>
       {isDark ? <Moon size={20} /> : <Sun size={20} />}
     </Button>
   )

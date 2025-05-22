@@ -76,7 +76,7 @@ export function APIExplorer() {
           <Button
             onClick={fetchData}
             disabled={loading}
-            className="w-full sm:w-auto bg-[#cc4b0c] text-red-50"
+            className="w-full sm:w-auto bg-[#cc4b0c] text-red-50 cursor-pointer"
           >
             {loading ? "Loading..." : "Submit"}
           </Button>
@@ -90,6 +90,7 @@ export function APIExplorer() {
                 key={suggestion}
                 variant="outline"
                 size="sm"
+                className="cursor-pointer"
                 onClick={() => {
                   setPath(suggestion)
                   fetchData()
