@@ -27,7 +27,7 @@ export function Banner() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
-                    <p className="text-muted-foreground">
+                    <p>
                         Access hundreds of capybara facts, images, and behaviors through our easy-to-use API
                     </p>
                 </CardContent>

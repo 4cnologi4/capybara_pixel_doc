@@ -14,7 +14,7 @@ export default function AboutPage() {
                 <CardContent className="space-y-6">
                     <div className="flex flex-col md:flex-row gap-6 items-center">
                         <div className="flex-1">
-                            <p className="text-muted-foreground">
+                            <p>
                                 The Capybara API provides comprehensive data about capybaras, 
                                 including their habitats, behaviors, and characteristics. 
                                 Our mission is to be the most reliable source of capybara 
