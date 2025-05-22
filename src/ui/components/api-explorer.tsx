@@ -5,6 +5,7 @@ import dynamic from "next/dynamic"
 import { Button } from "@/ui/components/button"
 import { Input } from "@/ui/components/input"
 import { Card, CardHeader, CardTitle, CardContent } from "@/ui/components/card"
+import { useThemeStore } from "@/lib/store/theme"
 
 // Lazy load the JSON viewer for better performance
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false })
@@ -22,6 +23,7 @@ export function APIExplorer() {
   const [response, setResponse] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [viewRaw, setViewRaw] = useState(false)
+  const { isDark } = useThemeStore()
 
   const fetchData = async () => {
     setLoading(true)
@@ -71,8 +73,8 @@ export function APIExplorer() {
               className="flex-1 min-w-0"
             />
           </div>
-          <Button 
-            onClick={fetchData} 
+          <Button
+            onClick={fetchData}
             disabled={loading}
             className="w-full sm:w-auto"
           >
@@ -104,7 +106,7 @@ export function APIExplorer() {
             <h3 className="text-lg font-semibold">
               Resource for <span className="text-[#C4745C]">{path.split('/')[0]}</span>
             </h3>
-            
+
             <div className="border rounded-md overflow-hidden">
               {viewRaw ? (
                 <pre className="bg-[#F5F5F5] dark:bg-[#1E1E1E] p-4 text-sm overflow-x-auto">
@@ -113,7 +115,7 @@ export function APIExplorer() {
               ) : (
                 <ReactJson
                   src={response}
-                  theme="tomorrow"
+                  theme={isDark ? "tomorrow" : "summerfruit:inverted"}
                   name={null}
                   displayDataTypes={false}
                   collapsed={2}
@@ -124,16 +126,16 @@ export function APIExplorer() {
             </div>
 
             <div className="flex justify-between items-center">
-              <a 
-                href={`${API_BASE}${path}`} 
-                target="_blank" 
+              <a
+                href={`${API_BASE}${path}`}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-[#8B5A2B] hover:underline"
               >
                 Direct link to results
               </a>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="sm"
                 onClick={() => setViewRaw(!viewRaw)}
               >

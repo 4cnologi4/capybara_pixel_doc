@@ -48,12 +48,9 @@ export function Navbar() {
             >
               About
             </Link>
-            <Link 
-              href="/docs" 
-              className="hover:text-[#ff5f0f] transition-colors opacity-50 cursor-not-allowed"
-            >
-              GraphQL (coming Soon)
-            </Link>
+            <span className="opacity-50 cursor-not-allowed">
+              GraphQL (coming soon)
+            </span>
           </div>
 
           {/* Mobile menu button */}
@@ -89,9 +86,9 @@ export function Navbar() {
           >
             About
           </Link>
-          <div className="block opacity-50 cursor-not-allowed">
-            GraphQL (coming Soon)
-          </div>
+          <span className="block opacity-50 cursor-not-allowed">
+            GraphQL (coming soon)
+          </span>
         </div>
       )}
     </nav>
