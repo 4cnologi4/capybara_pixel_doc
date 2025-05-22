@@ -76,7 +76,7 @@ export function APIExplorer() {
           <Button
             onClick={fetchData}
             disabled={loading}
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto bg-[#cc4b0c]"
           >
             {loading ? "Loading..." : "Submit"}
           </Button>

@@ -12,7 +12,7 @@ import Image from "next/image"
 export function Banner() {
     return (
         <div className="w-full flex justify-center py-12">
-            <Card className="w-full max-w-2xl">
+            <Card className="w-full">
                 <CardHeader className="items-center text-center">
                     <Image
                         src="/assets/images/capy_api_icon_v3.png" // Update with your image path
