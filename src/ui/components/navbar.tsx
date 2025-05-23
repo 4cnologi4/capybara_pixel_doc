@@ -48,9 +48,14 @@ export function Navbar() {
             >
               About
             </Link>
-            <span className="opacity-50 cursor-not-allowed">
+            <Link
+              href="/graphql"
+              className={`hover:text-[#ff5f0f] transition-colors ${
+                isActive('/graphql') ? 'font-bold bg-[#cc4b0c] rounded-md px-3 py-1' : ''
+              }`}
+            >
               GraphQL (coming soon)
-            </span>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -86,9 +91,15 @@ export function Navbar() {
           >
             About
           </Link>
-          <span className="block opacity-50 cursor-not-allowed">
+          <Link
+            href="/graphql"
+            className={`block hover:text-[#ff5f0f] ${
+              isActive('/graphql') ? 'font-bold bg-[#cc4b0c] rounded-md px-3 py-1' : 'opacity-50'
+            }`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
             GraphQL (coming soon)
-          </span>
+          </Link>
         </div>
       )}
     </nav>

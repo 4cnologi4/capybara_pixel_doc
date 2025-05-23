@@ -116,7 +116,7 @@ export function APIExplorer() {
               ) : (
                 <ReactJson
                   src={response}
-                  theme={isDark ? "tomorrow" : "summerfruit:inverted"}
+                  theme={isDark ? "tomorrow" : "bright:inverted"}
                   name={null}
                   displayDataTypes={false}
                   collapsed={2}
