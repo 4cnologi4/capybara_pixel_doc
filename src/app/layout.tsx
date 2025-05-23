@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Navbar } from "@/ui/components/navbar"
 import { Footer } from "@/ui/components/footer"
 import { ThemeProvider } from "@/ui/theme-provider"
+import { QueryClientProviderWrapper } from "@/providers/query-client-provider"
 
 export const metadata: Metadata = {
   title: "Capybara API | The Ultimate Capybara Data Source",
@@ -35,15 +36,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">
-              <div className="mx-auto w-full max-w-7xl px-6 py-12">
-                {children}
-              </div>
-            </main>
-            <Footer />
-          </div>
+          <QueryClientProviderWrapper>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <main className="flex-1">
+                <div className="mx-auto w-full max-w-7xl px-6 py-12">
+                  {children}
+                </div>
+              </main>
+              <Footer />
+            </div>
+          </QueryClientProviderWrapper>
         </ThemeProvider>
       </body>
     </html>

@@ -6,12 +6,14 @@ import { Button } from "@/ui/components/button"
 import { Input } from "@/ui/components/input"
 import { Card, CardHeader, CardTitle, CardContent } from "@/ui/components/card"
 import { useThemeStore } from "@/lib/store/theme"
+import { useApiQuery } from "@/lib/api-service"
 
 // Lazy load the JSON viewer for better performance
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false })
 
-const API_BASE = "https://api.capybaras.com/v2/"
+const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 const SUGGESTIONS = [
+  "capybara/names",
   "capybaras/1",
   "capybaras/2",
   "habitats/forest",
@@ -19,40 +21,23 @@ const SUGGESTIONS = [
 ]
 
 export function APIExplorer() {
-  const [path, setPath] = useState("capybaras/1") // Default suggestion
-  const [response, setResponse] = useState<any>(null)
-  const [loading, setLoading] = useState(false)
+  const [path, setPath] = useState("capybaras/1")
   const [viewRaw, setViewRaw] = useState(false)
   const { isDark } = useThemeStore()
 
-  const fetchData = async () => {
-    setLoading(true)
-    try {
-      // Simulate API call with mock data
-      await new Promise(resolve => setTimeout(resolve, 800))
-      setResponse({
-        id: 1,
-        name: "capybara",
-        scientific_name: "Hydrochoerus hydrochaeris",
-        description: "The world's largest rodent",
-        habitat: {
-          type: "wetlands",
-          region: "South America",
-          countries: ["Brazil", "Venezuela", "Colombia"]
-        },
-        diet: ["grasses", "aquatic plants", "fruits"],
-        social_behavior: {
-          group_size: "10-20",
-          hierarchy: "loose",
-          communication: ["vocalizations", "scent marking"]
-        },
-        conservation_status: "Least Concern"
-      })
-    } catch (error) {
-      setResponse({ error: "Failed to fetch data" })
-    } finally {
-      setLoading(false)
+  // Using the API service hook
+  const { data: response, isLoading, error, refetch } = useApiQuery<any>(
+    ['api-explorer', path],
+    path,
+    {
+      queryKey: ['api-explorer', path],
+      enabled: false,
+      retry: false
     }
+  )
+
+  const fetchData = () => {
+    refetch()
   }
 
   return (
@@ -75,10 +60,10 @@ export function APIExplorer() {
           </div>
           <Button
             onClick={fetchData}
-            disabled={loading}
+            disabled={isLoading}
             className="w-full sm:w-auto bg-[#cc4b0c] text-red-50 cursor-pointer"
           >
-            {loading ? "Loading..." : "Submit"}
+            {isLoading ? "Loading..." : "Submit"}
           </Button>
         </div>
 
@@ -101,6 +86,12 @@ export function APIExplorer() {
             ))}
           </div>
         </div>
+
+        {error && (
+          <div className="text-red-500 p-4 bg-red-50 dark:bg-red-900/20 rounded-md">
+            Error: {error.message}
+          </div>
+        )}
 
         {response && (
           <div className="space-y-4">
