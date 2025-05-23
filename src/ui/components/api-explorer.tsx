@@ -7,6 +7,7 @@ import { Input } from "@/ui/components/input"
 import { Card, CardHeader, CardTitle, CardContent } from "@/ui/components/card"
 import { useThemeStore } from "@/lib/store/theme"
 import { useApiQuery } from "@/lib/api-service"
+import { Copy, Check } from "lucide-react"
 
 // Lazy load the JSON viewer for better performance
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false })
@@ -14,18 +15,18 @@ const ReactJson = dynamic(() => import("react-json-view"), { ssr: false })
 const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 const SUGGESTIONS = [
   "capybara/names",
-  "capybaras/1",
-  "capybaras/2",
-  "habitats/forest",
-  "behaviors/swimming"
+  "capybara/countries",
+  "capybara/food",
+  "capybara/habitats",
+  "capybara/activities"
 ]
 
 export function APIExplorer() {
-  const [path, setPath] = useState("capybaras/1")
+  const [path, setPath] = useState("capybara/names")
   const [viewRaw, setViewRaw] = useState(false)
   const { isDark } = useThemeStore()
+  const [isCopied, setIsCopied] = useState(false);
 
-  // Using the API service hook
   const { data: response, isLoading, error, refetch } = useApiQuery<any>(
     ['api-explorer', path],
     path,
@@ -36,9 +37,16 @@ export function APIExplorer() {
     }
   )
 
-  const fetchData = () => {
-    refetch()
+  const handleSuggestionClick = async (suggestion: string) => {
+    setPath(suggestion)
+    await refetch() // Wait for refetch to complete
   }
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(JSON.stringify(response, null, 2));
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 3000);
+  };
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
@@ -59,11 +67,30 @@ export function APIExplorer() {
             />
           </div>
           <Button
-            onClick={fetchData}
+            variant="outline"
+            size="sm"
+            disabled={!response}
+            onClick={handleCopy}
+            className="cursor-pointer"
+          >
+            {isCopied ? (
+              <span className="flex items-center gap-1">
+                <Check className="h-4 w-4" /> Copied!
+              </span>
+            ) : (
+              <Copy className="h-4 w-4" />
+            )}
+          </Button>
+          <Button
+            onClick={() => refetch()}
             disabled={isLoading}
             className="w-full sm:w-auto bg-[#cc4b0c] text-red-50 cursor-pointer"
           >
-            {isLoading ? "Loading..." : "Submit"}
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <Spinner /> Loading...
+              </span>
+            ) : 'Submit'}
           </Button>
         </div>
 
@@ -76,12 +103,14 @@ export function APIExplorer() {
                 variant="outline"
                 size="sm"
                 className="cursor-pointer"
-                onClick={() => {
-                  setPath(suggestion)
-                  fetchData()
-                }}
+                disabled={isLoading}
+                onClick={() => handleSuggestionClick(suggestion)}
               >
-                {suggestion}
+                {isLoading && path === suggestion ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner size="sm" /> {suggestion}
+                  </span>
+                ) : suggestion}
               </Button>
             ))}
           </div>
@@ -96,24 +125,30 @@ export function APIExplorer() {
         {response && (
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">
-              Resource for <span className="text-[#C4745C]">{path.split('/')[0]}</span>
+              Resource for <span className="text-[#C4745C]">{path.split('/')[1]}</span>
             </h3>
 
             <div className="border rounded-md overflow-hidden">
               {viewRaw ? (
-                <pre className="bg-[#F5F5F5] dark:bg-[#1E1E1E] p-4 text-sm overflow-x-auto">
+                <pre className="bg-[#F5F5F5] dark:bg-[#1E1E1E] p-4 text-sm overflow-auto max-h-[500px]">
                   {JSON.stringify(response, null, 2)}
                 </pre>
               ) : (
-                <ReactJson
-                  src={response}
-                  theme={isDark ? "tomorrow" : "bright:inverted"}
-                  name={null}
-                  displayDataTypes={false}
-                  collapsed={2}
-                  collapseStringsAfterLength={50}
-                  style={{ padding: "1rem", backgroundColor: "transparent" }}
-                />
+                <div className="max-h-[500px] overflow-auto">
+                  <ReactJson
+                    src={response}
+                    theme={isDark ? "tomorrow" : "bright:inverted"}
+                    name={null}
+                    displayDataTypes={false}
+                    collapsed={2}
+                    collapseStringsAfterLength={50}
+                    style={{ 
+                      padding: "1rem", 
+                      backgroundColor: "transparent",
+                      overflow: "hidden" // Prevent internal scrolling
+                    }}
+                  />
+                </div>
               )}
             </div>
 
@@ -138,5 +173,13 @@ export function APIExplorer() {
         )}
       </CardContent>
     </Card>
+  )
+}
+
+// Add this spinner component (create a new file or add to your UI components)
+function Spinner({ size = 'default' }: { size?: 'sm' | 'default' }) {
+  return (
+    <div className={`animate-spin rounded-full border-2 border-current border-t-transparent ${size === 'sm' ? 'h-4 w-4' : 'h-5 w-5'
+      }`} />
   )
 }
