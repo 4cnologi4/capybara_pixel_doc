@@ -1,36 +1,44 @@
-const config = {
+module.exports = {
   darkMode: ["class"],
   content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./pages/**/*.{ts,tsx}",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./ui/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "1.5rem",
+    },
     extend: {
       colors: {
-        capybara: {
-          800: '#6d3b1f',
-          600: '#cc4b0c',
-          400: '#ff5f0f',
+        border: "hsl(240 3.7% 15.9%)",
+        input: "hsl(240 3.7% 15.9%)",
+        ring: "hsl(24.6 95% 53.1%)",
+        background: "hsl(20 14.3% 4.1%)",
+        foreground: "hsl(0 0% 95%)",
+        primary: {
+          DEFAULT: "hsl(24.6 95% 53.1%)",
+          foreground: "hsl(0 0% 98%)",
         },
-        dark: {
-          900: '#0e0e0f',
-          800: '#1a1a1c',
-          700: '#2a2a2e',
+        secondary: {
+          DEFAULT: "hsl(240 3.7% 15.9%)",
+          foreground: "hsl(0 0% 98%)",
         },
-        light: {
-          100: '#f4f4f5',
-          200: '#a1a1aa',
-        }
+        destructive: {
+          DEFAULT: "hsl(0 62.8% 30.6%)",
+          foreground: "hsl(0 0% 98%)",
+        },
+        card: {
+          DEFAULT: "hsl(24 9.8% 10%)",
+          foreground: "hsl(0 0% 95%)",
+        },
       },
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+      borderRadius: {
+        lg: "0.5rem",
+        md: "calc(0.5rem - 2px)",
+        sm: "calc(0.5rem - 4px)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
-
-export default config;

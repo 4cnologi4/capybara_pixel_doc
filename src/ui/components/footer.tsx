@@ -1,9 +1,23 @@
 export function Footer() {
     return (
-        <footer className="bg-[#1a1a1c] text-[#a1a1aa] py-6 text-sm text-center">
-            <div className="max-w-7xl mx-auto px-6">
-                <p>© {new Date().getFullYear()} Capybara API. All rights reserved.</p>
-                <p className="mt-2">Built with Next.js, TypeScript, and Tailwind CSS</p>
+        <footer className="border-t bg-card py-8">
+            <div className="mx-auto w-full max-w-7xl px-6">
+                <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+                    <p className="text-sm text-muted-foreground">
+                        © {new Date().getFullYear()} Capybara API. All rights reserved.
+                    </p>
+                    {/* <div className="flex gap-4">
+                        <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+                            Terms
+                        </a>
+                        <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+                            Privacy
+                        </a>
+                        <a href="#" className="text-sm text-muted-foreground hover:text-foreground">
+                            Contact
+                        </a>
+                    </div> */}
+                </div>
             </div>
         </footer>
     )
