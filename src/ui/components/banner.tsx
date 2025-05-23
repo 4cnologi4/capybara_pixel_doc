@@ -17,9 +17,9 @@ export function Banner() {
                     <Image
                         src="/assets/images/capy_api_icon_v4.png" // Update with your image path
                         alt="Capybara"
-                        width={80}
-                        height={80}
-                        className="h-20 w-20"
+                        width={200}
+                        height={200}
+                        className="rounded-full mb-4 mx-auto"
                     />
                     <CardTitle className="text-3xl">Welcome to Capybara API</CardTitle>
                     <CardDescription className="text-lg">
