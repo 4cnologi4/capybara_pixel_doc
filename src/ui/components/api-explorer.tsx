@@ -18,7 +18,12 @@ const SUGGESTIONS = [
   "capybara/countries",
   "capybara/food",
   "capybara/habitats",
-  "capybara/activities"
+  "capybara/activities",
+  "capybara/names/1",
+  "capybara/countries/1",
+  "capybara/food/1",
+  "capybara/habitats/1",
+  "capybara/activities/1",
 ]
 
 export function APIExplorer() {
@@ -48,6 +53,27 @@ export function APIExplorer() {
     setTimeout(() => setIsCopied(false), 3000);
   };
 
+  const validateIdParam = (path: string) => {
+    const parts = path.split("/");
+    if (parts.length === 3
+      && parts[0] === "capybara"
+      && (parts[1] === "names" || parts[1] === "countries" || parts[1] === "food" || parts[1] === "habitats" || parts[1] === "activities")
+      && parts[2] !== undefined
+    ) {
+      const id = parts[2];
+      return !isNaN(Number(id)) && Number.isInteger(Number(id)) && id.trim() !== "";
+    }
+    return true; // Allow non-ID paths
+  };
+
+  const handleSubmit = async () => {
+    if (!validateIdParam(path)) {
+      alert("Invalid ID: Must be an integer.");
+      return;
+    }
+    await refetch();
+  };
+
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader>
@@ -62,7 +88,7 @@ export function APIExplorer() {
             <Input
               value={path}
               onChange={(e) => setPath(e.target.value)}
-              placeholder="capybaras/1"
+              placeholder="capybara/names/1"
               className="flex-1 min-w-0"
             />
           </div>
@@ -82,7 +108,7 @@ export function APIExplorer() {
             )}
           </Button>
           <Button
-            onClick={() => refetch()}
+            onClick={handleSubmit}
             disabled={isLoading}
             className="w-full sm:w-auto bg-[#cc4b0c] text-red-50 cursor-pointer"
           >
@@ -142,8 +168,8 @@ export function APIExplorer() {
                     displayDataTypes={false}
                     collapsed={2}
                     collapseStringsAfterLength={50}
-                    style={{ 
-                      padding: "1rem", 
+                    style={{
+                      padding: "1rem",
                       backgroundColor: "transparent",
                       overflow: "hidden" // Prevent internal scrolling
                     }}
