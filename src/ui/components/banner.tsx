@@ -6,7 +6,7 @@ import {
     CardTitle,
     CardDescription,
     CardContent
-} from "@/ui/components/card"
+} from "@/components/ui/card"
 import Image from "next/image"
 
 export function Banner() {

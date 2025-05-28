@@ -4,7 +4,6 @@ import { Navbar } from "@/ui/components/navbar"
 import { Footer } from "@/ui/components/footer"
 import { ThemeProvider } from "@/ui/theme-provider"
 import { QueryClientProviderWrapper } from "@/providers/query-client-provider"
-import { DataFetcher } from "@/ui/components/DataFetcher"
 
 export const metadata: Metadata = {
   title: "Capybara API | The Ultimate Capybara Data Source",

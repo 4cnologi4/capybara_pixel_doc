@@ -2,12 +2,13 @@
 
 import { useState } from "react"
 import dynamic from "next/dynamic"
-import { Button } from "@/ui/components/button"
-import { Input } from "@/ui/components/input"
-import { Card, CardHeader, CardTitle, CardContent } from "@/ui/components/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { useThemeStore } from "@/lib/store/theme"
 import { useApiQuery } from "@/lib/api-service"
 import { Copy, Check } from "lucide-react"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 // Lazy load the JSON viewer for better performance
 const ReactJson = dynamic(() => import("react-json-view"), { ssr: false })
@@ -29,6 +30,7 @@ const SUGGESTIONS = [
 export function APIExplorer() {
   const [path, setPath] = useState("capybara/names")
   const [viewRaw, setViewRaw] = useState(false)
+  const [viewAsTable, setViewAsTable] = useState(false)
   const { isDark } = useThemeStore()
   const [isCopied, setIsCopied] = useState(false);
 
@@ -73,6 +75,30 @@ export function APIExplorer() {
     }
     await refetch();
   };
+
+  // Utility function to flatten JSON into table rows (only uses `data` field)
+  const flattenJsonToTable = (response: any) => {
+    if (!response || response.data === null || response.data === undefined) return [];
+
+    const data = response.data;
+
+    if (Array.isArray(data)) {
+      // Handle array of objects
+      return data.map((item, index) => ({
+        id: index,
+        ...item,
+      }));
+    } else if (typeof data === "object") {
+      // Handle single object
+      return [data];
+    } else {
+      // Handle primitive values (unlikely for `data` field)
+      return [{ value: data }];
+    }
+  };
+
+  const tableData = flattenJsonToTable(response);
+  const isDataNull = response?.data === null || response?.data === undefined;
 
   return (
     <Card className="w-full max-w-4xl mx-auto">
@@ -157,12 +183,46 @@ export function APIExplorer() {
             <div className="border rounded-md overflow-hidden">
               {viewRaw ? (
                 <pre className="bg-[#F5F5F5] dark:bg-[#1E1E1E] p-4 text-sm overflow-auto max-h-[500px]">
-                  {JSON.stringify(response, null, 2)}
+                  {JSON.stringify(response, null, 2)} {/* Full JSON */}
                 </pre>
+              ) : viewAsTable ? (
+                <div className="max-h-[500px] overflow-auto">
+                  {isDataNull ? (
+                    <div className="p-4 text-center text-muted-foreground">
+                      {response.message || "No data available."}
+                    </div>
+                  ) : (
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          {tableData.length > 0 &&
+                            Object.keys(tableData[0]).map((key) => (
+                              <TableHead key={key}>{key}</TableHead>
+                            ))}
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {tableData.map((row, rowIndex) => (
+                          <TableRow key={rowIndex}>
+                            {Object.values(row).map((value, cellIndex) => (
+                              <TableCell key={cellIndex}>
+                                {Array.isArray(value)
+                                  ? value.join(", ")
+                                  : typeof value === "object"
+                                  ? JSON.stringify(value)
+                                  : String(value)}
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  )}
+                </div>
               ) : (
                 <div className="max-h-[500px] overflow-auto">
                   <ReactJson
-                    src={response}
+                    src={response} /* Full JSON */
                     theme={isDark ? "tomorrow" : "bright:inverted"}
                     name={null}
                     displayDataTypes={false}
@@ -171,7 +231,7 @@ export function APIExplorer() {
                     style={{
                       padding: "1rem",
                       backgroundColor: "transparent",
-                      overflow: "hidden" // Prevent internal scrolling
+                      overflow: "hidden",
                     }}
                   />
                 </div>
@@ -187,13 +247,25 @@ export function APIExplorer() {
               >
                 Direct link to results
               </a>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setViewRaw(!viewRaw)}
-              >
-                {viewRaw ? "View Formatted" : "View Raw JSON"}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="cursor-pointer"
+                  onClick={() => setViewRaw(!viewRaw)}
+                >
+                  {viewRaw ? "View Formatted" : "View Raw JSON"}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="cursor-pointer"
+                  onClick={() => setViewAsTable(!viewAsTable)}
+                  disabled={isDataNull} /* Disable if data is null */
+                >
+                  {viewAsTable ? "View JSON" : "View as Table"}
+                </Button>
+              </div>
             </div>
           </div>
         )}

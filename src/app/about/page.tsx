@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/ui/components/card"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 
 export default function AboutPage() {
@@ -29,6 +29,19 @@ export default function AboutPage() {
                                 height={300}
                                 className="rounded-lg"
                             />
+                        </div>
+                    </div>
+
+                    <div className="mt-8">
+                        <h3 className="text-xl font-semibold mb-4">API Information</h3>
+                        <div className="space-y-2">
+                            <p>
+                                This is a consumption-only API — only the HTTP GET method is available for its resources.
+                            </p>
+                            <p>
+                                No authentication is required to access this API, and all resources are fully open and available. 
+                                However, you are limited to only 100 requests per minute.
+                            </p>
                         </div>
                     </div>
 
