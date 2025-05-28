@@ -47,7 +47,6 @@ export default function RootLayout({
               </main>
               <Footer />
             </div>
-            <DataFetcher />
           </QueryClientProviderWrapper>
         </ThemeProvider>
       </body>
